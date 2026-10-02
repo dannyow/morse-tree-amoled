@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# The history of this repo is meant to be publishable as it is: no session links and no
+# private words (same list as check.sh) in commit messages.
+list="${LAB_PRIVATE_WORDS:-$HOME/.config/lab-private-words}"
+repo_list="$(git rev-parse --git-dir 2>/dev/null)/info/private-words"
+pat=$( { echo "claude.ai""/code"; cat "$list" "$repo_list" 2>/dev/null | grep -v '^#'; } | grep -v '^$')
+msg=$(grep -v '^#' "$1")
+if hit=$(printf '%s\n' "$msg" | grep -n -i -F "$pat") && [ -n "$hit" ]; then
+  echo "commit-msg: private word or session link in the message:"; echo "$hit" | sed 's/^/  /'
+  exit 1
+fi
+exit 0

@@ -1,0 +1,7 @@
+.pio/
+.DS_Store
+firmware/secrets.h
+*.map
+CLAUDE.local.md
+CLAUDE.md
+dist/

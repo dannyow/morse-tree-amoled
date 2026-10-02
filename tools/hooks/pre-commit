@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# bash 3.2 compatible (macOS): no mapfile
+staged=(); while IFS= read -r f; do staged+=("$f"); done < <(git diff --cached --name-only --diff-filter=ACM)
+[ ${#staged[@]} -eq 0 ] && exit 0
+exec "$(git rev-parse --show-toplevel)/tools/hooks/check.sh" "${staged[@]}"
