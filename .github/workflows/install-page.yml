@@ -1,0 +1,44 @@
+# Publishes install/ to GitHub Pages with the latest release image, so the browser install
+# button always flashes the newest release. Runs on every published release, or by hand.
+name: Install page
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the latest release image and write the manifest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName -q .tagName)
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern '*-esp32c6-16mb.bin' --dir install
+          bin=$(cd install && ls *-esp32c6-16mb.bin)
+          jq -n --arg v "${tag#v}" --arg bin "$bin" '{
+            name: "Morse Tree", version: $v, new_install_prompt_erase: false,
+            builds: [{ chipFamily: "ESP32-C6", parts: [{ path: $bin, offset: 0 }] }]
+          }' > install/manifest.json
+          cat install/manifest.json
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: install
+      - id: deployment
+        uses: actions/deploy-pages@v4

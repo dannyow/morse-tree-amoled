@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morse Tree: install</title>
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+<style>
+  :root { color-scheme: light dark; --bg: #f6f7f9; --fg: #1d2330; --muted: #5b6475; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0b1020; --fg: #e3e7ef; --muted: #9aa3b5; } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 32px 16px; }
+  h1 { margin: 0 0 8px; }
+  p, li { color: var(--muted); }
+  .install { margin: 24px 0; }
+  code { font-size: 0.95em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Morse Tree</h1>
+  <p>A Morse code trainer for the Waveshare ESP32-C6-Touch-AMOLED-2.16. This page flashes the
+  latest release onto the module straight from the browser.</p>
+
+  <ol>
+    <li>Use desktop Chrome or Edge. Safari and Firefox cannot talk to a serial port.</li>
+    <li>Connect the module with a USB-C cable that carries data.</li>
+    <li>Press <b>Install</b>, pick the module's serial port and confirm.</li>
+    <li>When it finishes, unplug the module and plug it back in.</li>
+  </ol>
+
+  <div class="install">
+    <esp-web-install-button manifest="manifest.json">
+      <span slot="unsupported">This browser cannot flash devices. Use desktop Chrome or Edge.</span>
+      <span slot="not-allowed">Flashing needs a secure (https) page.</span>
+    </esp-web-install-button>
+  </div>
+
+  <p>If the port does not connect, hold BOOT while you plug the module in and try again.
+  The install replaces whatever the module ran before.</p>
+  <p>Source, manual install and how to build it:
+  <a href="https://github.com/dannyow/morse-tree-amoled">github.com/dannyow/morse-tree-amoled</a></p>
+</main>
+</body>
+</html>

@@ -38,7 +38,12 @@ AXP2101 power management. No other parts are needed, only a USB-C cable that car
 ## Install from the browser
 
 No toolchain needed. You need desktop Chrome or Edge (Safari and Firefox cannot talk to a
-serial port).
+serial port), and a USB-C cable that carries data.
+
+The quickest way: open https://dannyow.github.io/morse-tree-amoled/, press **Install**
+and pick the module's serial port. It flashes the latest release.
+
+The same by hand, with Espressif's web flasher:
 
 1. Download `morse-tree-<version>-esp32c6-16mb.bin` from the Releases page of this repository.
 2. Connect the module to the computer with a USB-C data cable.
@@ -89,6 +94,7 @@ is the wrong boundary for your hand, or to key faster.
 | `firmware/lib/ES8311/` | the codec driver |
 | `docs/HARDWARE.md` | what turned out to matter about this board |
 | `tools/release/build-bin.sh` | builds the single image for the browser install |
+| `install/`, `.github/workflows/install-page.yml` | the install page; each published release redeploys it with the new image |
 | `tools/hooks/` | repo checks, installed with `tools/hooks/install.sh` |
 
 `docs/HARDWARE.md` collects what turned out to matter about this board (power order, no
